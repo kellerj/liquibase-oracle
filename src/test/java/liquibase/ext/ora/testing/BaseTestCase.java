@@ -9,6 +9,7 @@ import liquibase.Liquibase;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.DatabaseException;
+import liquibase.lockservice.LockServiceFactory;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
 /*
@@ -47,5 +48,6 @@ public class BaseTestCase {
     public static void cleanDB() throws Exception {
         liquiBase = new Liquibase(changeLogFile, new ClassLoaderResourceAccessor(), jdbcConnection);
         liquiBase.dropAll();
+        LockServiceFactory.reset();
     }
 }
