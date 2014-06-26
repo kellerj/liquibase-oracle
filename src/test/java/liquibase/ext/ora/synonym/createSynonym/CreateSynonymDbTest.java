@@ -20,10 +20,10 @@ public class CreateSynonymDbTest extends BaseSynonymTest {
 	public void testCompare() throws Exception {
 		assertFalse(synonymExists());
 
-		liquiBase.update(null);
+		liquiBase.update("null");
 		assertTrue(synonymExists());
 
-		liquiBase.rollback(1, null);
+		liquiBase.rollback(1, "null");
 		assertFalse(synonymExists());
 	}
 

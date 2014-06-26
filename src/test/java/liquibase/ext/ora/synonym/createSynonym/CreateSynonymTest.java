@@ -94,7 +94,7 @@ public class CreateSynonymTest extends BaseTestCase {
 		DatabaseChangeLog changeLog = ChangeLogParserFactory.getInstance().getParser(changeLogFile, resourceAccessor).parse(changeLogFile,
 				changeLogParameters, resourceAccessor);
 
-		database.checkDatabaseChangeLogTable(false, changeLog);
+		//database.checkDatabaseChangeLogTable(false, changeLog);
 		changeLog.validate(database);
 
 		List<ChangeSet> changeSets = changeLog.getChangeSets();
@@ -107,7 +107,7 @@ public class CreateSynonymTest extends BaseTestCase {
 
 	@Test
 	public void test() throws Exception {
-		liquiBase.update(null);
-		liquiBase.rollback(1, null);
+		liquiBase.update("null");
+		liquiBase.rollback(1, "null");
 	}
 }

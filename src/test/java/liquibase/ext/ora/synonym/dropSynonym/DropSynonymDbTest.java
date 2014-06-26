@@ -2,13 +2,7 @@ package liquibase.ext.ora.synonym.dropSynonym;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import liquibase.exception.DatabaseException;
 import liquibase.ext.ora.synonym.BaseSynonymTest;
-import liquibase.ext.ora.testing.BaseTestCase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +21,7 @@ public class DropSynonymDbTest extends BaseSynonymTest {
 		jdbcConnection.createStatement().executeQuery("CREATE OR REPLACE SYNONYM new_synonym FOR object");
 		assertTrue(synonymExists());
 
-		liquiBase.update(null);
+		liquiBase.update("null");
 		assertFalse(synonymExists());
 
 	}
