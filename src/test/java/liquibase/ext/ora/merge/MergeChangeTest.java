@@ -5,10 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import liquibase.Contexts;
 import liquibase.change.Change;
 import liquibase.change.ChangeFactory;
 import liquibase.change.ChangeMetaData;
-import liquibase.changelog.ChangeLogIterator;
 import liquibase.changelog.ChangeLogParameters;
 import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
@@ -36,7 +36,7 @@ public class MergeChangeTest extends BaseTestCase {
 
     @Test
     public void test() throws Exception {
-        liquiBase.update((String) null);
+        liquiBase.update(new Contexts());
     }
 
     @Test
@@ -109,6 +109,7 @@ public class MergeChangeTest extends BaseTestCase {
         DatabaseChangeLog changeLog = ChangeLogParserFactory.getInstance().getParser(changeLogFile, resourceAccessor).parse(changeLogFile,
                 changeLogParameters, resourceAccessor);
 
+        liquiBase.checkLiquibaseTables( false, changeLog, new Contexts() );
         changeLog.validate(database);
 
 

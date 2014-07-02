@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import liquibase.Contexts;
 import liquibase.change.Change;
 import liquibase.change.ChangeFactory;
 import liquibase.change.ChangeMetaData;
-import liquibase.changelog.ChangeLogIterator;
 import liquibase.changelog.ChangeLogParameters;
 import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
@@ -88,6 +88,7 @@ public class EncapsulateTableWithViewTest extends BaseTestCase {
         DatabaseChangeLog changeLog = ChangeLogParserFactory.getInstance().getParser(changeLogFile, resourceAccessor).parse(changeLogFile,
                 changeLogParameters, resourceAccessor);
 
+        liquiBase.checkLiquibaseTables( false, changeLog, new Contexts() );
         changeLog.validate(database);
 
 

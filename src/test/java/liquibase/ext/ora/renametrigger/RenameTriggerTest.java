@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import liquibase.Contexts;
 import liquibase.change.Change;
 import liquibase.change.ChangeFactory;
 import liquibase.change.ChangeMetaData;
-import liquibase.changelog.ChangeLogIterator;
 import liquibase.changelog.ChangeLogParameters;
 import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
@@ -84,6 +84,7 @@ public class RenameTriggerTest extends BaseTestCase {
         DatabaseChangeLog changeLog = ChangeLogParserFactory.getInstance().getParser(changeLogFile, resourceAccessor).parse(changeLogFile,
                 changeLogParameters, resourceAccessor);
 
+        liquiBase.checkLiquibaseTables( false, changeLog, new Contexts() );
         changeLog.validate(database);
 
 
@@ -91,7 +92,7 @@ public class RenameTriggerTest extends BaseTestCase {
 
         List<String> expectedQuery = new ArrayList<String>();
 
-        expectedQuery.add("ALTER TRIGGER LIQUIBASE.zuiolTrigger RENAME TO RenamedZuiolTrigger");
+        expectedQuery.add("ALTER TRIGGER zuiolTrigger RENAME TO RenamedZuiolTrigger");
 
         int i = 0;
 
@@ -108,6 +109,6 @@ public class RenameTriggerTest extends BaseTestCase {
 
     @Test
     public void test() throws Exception {
-        liquiBase.update((String) null);
+        liquiBase.update(new Contexts());
     }
 }

@@ -1,5 +1,6 @@
 package liquibase.ext.ora.creatematerializedview;
 
+import liquibase.Contexts;
 import liquibase.ext.ora.testing.BaseTestCase;
 
 import org.dbunit.Assertion;
@@ -37,14 +38,14 @@ public class CreateMaterializedViewDBTest extends BaseTestCase {
     public void testCompare() throws Exception {
         QueryDataSet actualDataSet = new QueryDataSet(getConnection());
 
-        liquiBase.update((String) null);
+        liquiBase.update(new Contexts());
         actualDataSet.addTable(TABLE_NAME, "SELECT * from " + TABLE_NAME);
         loadedDataSet = getDataSet();
 
         Assertion.assertEquals(loadedDataSet, actualDataSet);
         // we *need* to roll these back here, as the CleanDB command does not know
         // to drop materialized views
-        liquiBase.rollback(3, (String) null);
+        liquiBase.rollback(3, new Contexts());
     }
 
 }

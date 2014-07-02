@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import liquibase.Contexts;
 import liquibase.change.Change;
 import liquibase.change.ChangeFactory;
 import liquibase.change.ChangeMetaData;
@@ -36,7 +37,7 @@ public class DisableConstraintChangeTest extends BaseTestCase {
 
     @Test
     public void test() throws Exception {
-        liquiBase.update((String) null);
+        liquiBase.update(new Contexts());
     }
 
     @Test
@@ -89,6 +90,9 @@ public class DisableConstraintChangeTest extends BaseTestCase {
 
         DatabaseChangeLog changeLog = ChangeLogParserFactory.getInstance().getParser(changeLogFile, resourceAccessor).parse(changeLogFile,
                 changeLogParameters, resourceAccessor);
+
+        liquiBase.checkLiquibaseTables( false, changeLog, new Contexts() );
+        ChangeLogIterator changeLogIterator = new ChangeLogIterator(changeLog);
 
         changeLog.validate(database);
 

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import liquibase.Contexts;
 import liquibase.change.Change;
 import liquibase.change.ChangeFactory;
 import liquibase.change.ChangeMetaData;
@@ -82,6 +83,7 @@ public class DisableTriggerTest extends BaseTestCase {
         DatabaseChangeLog changeLog = ChangeLogParserFactory.getInstance().getParser(changeLogFile, resourceAccessor).parse(changeLogFile,
                 changeLogParameters, resourceAccessor);
 
+        liquiBase.checkLiquibaseTables( false, changeLog, new Contexts() );
         changeLog.validate(database);
 
 
@@ -89,7 +91,7 @@ public class DisableTriggerTest extends BaseTestCase {
 
         List<String> expectedQuery = new ArrayList<String>();
 
-        expectedQuery.add("ALTER TRIGGER LIQUIBASE.RenamedZuiolTrigger DISABLE");
+        expectedQuery.add("ALTER TRIGGER RenamedZuiolTrigger DISABLE");
 
         int i = 0;
 
@@ -106,6 +108,6 @@ public class DisableTriggerTest extends BaseTestCase {
 
     @Test
     public void test() throws Exception {
-        liquiBase.update((String) null);
+        liquiBase.update(new Contexts());
     }
 }
