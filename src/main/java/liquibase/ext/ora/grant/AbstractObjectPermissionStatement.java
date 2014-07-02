@@ -1,12 +1,11 @@
 package liquibase.ext.ora.grant;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import liquibase.exception.ValidationErrors;
 import liquibase.statement.AbstractSqlStatement;
-
-import org.apache.commons.lang.StringUtils;
 
 public abstract class AbstractObjectPermissionStatement extends
 		AbstractSqlStatement {
@@ -128,8 +127,53 @@ public abstract class AbstractObjectPermissionStatement extends
         if ( getExecute() ) {
         	permissions.add( "EXECUTE" );
         }
-        return StringUtils.join(permissions, ',');
+        return join(permissions.iterator(), ',');
 	}
+
+    /**
+     * <p>Joins the elements of the provided <code>Iterator</code> into
+     * a single String containing the provided elements.</p>
+     *
+     * <p>No delimiter is added before or after the list. Null objects or empty
+     * strings within the iteration are represented by empty strings.</p>
+     *
+     * <p>See the examples here: {@link #join(Object[],char)}. </p>
+     *
+     * @param iterator  the <code>Iterator</code> of values to join together, may be null
+     * @param separator  the separator character to use
+     * @return the joined String, <code>null</code> if null iterator input
+     * @since 2.0
+     */
+    protected String join(Iterator<String> iterator, char separator) {
+
+        // handle null, zero and one elements before building a buffer
+        if (iterator == null) {
+            return null;
+        }
+        if (!iterator.hasNext()) {
+            return "";
+        }
+        String first = iterator.next();
+        if (!iterator.hasNext()) {
+            return first;
+        }
+
+        // two or more elements
+        StringBuilder buf = new StringBuilder(256); // Java default is 16, probably too small
+        if (first != null) {
+            buf.append(first);
+        }
+
+        while (iterator.hasNext()) {
+            buf.append(separator);
+            String obj = iterator.next();
+            if (obj != null) {
+                buf.append(obj);
+            }
+        }
+
+        return buf.toString();
+    }
 
 	public ValidationErrors validate() {
         ValidationErrors validationErrors = new ValidationErrors();
