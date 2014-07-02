@@ -9,7 +9,6 @@ import java.util.List;
 import liquibase.change.Change;
 import liquibase.change.ChangeFactory;
 import liquibase.change.ChangeMetaData;
-import liquibase.changelog.ChangeLogIterator;
 import liquibase.changelog.ChangeLogParameters;
 import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
@@ -62,7 +61,7 @@ public class CreateMaterializedViewTest extends BaseTestCase {
         change.setColumnAliases("COLUMN_ALIASES");
         change.setObjectType("OBJECT_TYPE");
         change.setTableSpace("TABLE_SPACE");
-        change.setQueryRewrite("QUERY_REWRITE");
+        change.setQueryRewrite(true);
         change.setSubquery("SUBQUERY");
 
         change.setReducedPrecision(true);
@@ -80,7 +79,7 @@ public class CreateMaterializedViewTest extends BaseTestCase {
         assertEquals("COLUMN_ALIASES", ((CreateMaterializedViewStatement) sqlStatements[0]).getColumnAliases());
         assertEquals("OBJECT_TYPE", ((CreateMaterializedViewStatement) sqlStatements[0]).getObjectType());
         assertEquals("TABLE_SPACE", ((CreateMaterializedViewStatement) sqlStatements[0]).getTableSpace());
-        assertEquals("QUERY_REWRITE", ((CreateMaterializedViewStatement) sqlStatements[0]).getQueryRewrite());
+        assertEquals(Boolean.TRUE, ((CreateMaterializedViewStatement) sqlStatements[0]).getQueryRewrite());
         assertEquals("SUBQUERY", ((CreateMaterializedViewStatement) sqlStatements[0]).getSubquery());
 
         assertTrue(((CreateMaterializedViewStatement) sqlStatements[0]).getReducedPrecision());
@@ -101,24 +100,42 @@ public class CreateMaterializedViewTest extends BaseTestCase {
 
         changeLog.validate(database);
 
-
         List<ChangeSet> changeSets = changeLog.getChangeSets();
+        assertEquals( "number of changesets in the " + changeLogFile + " is incorrect", 7, changeSets.size() );
+        ChangeSet changeSet = changeSets.get(4);
 
-        List<String> expectedQuery = new ArrayList<String>();
+        // Test CreateMaterializedViewTest5
+        assertEquals("Wrong number of changes found in changeset CreateMaterializedViewTest5", 1, changeSet.getChanges().size());
+        Change change = changeSet.getChanges().get(0);
 
-        expectedQuery.add("CREATE MATERIALIZED VIEW zuiolView AS select * from Table1");
+        List<String> expectedQueries = new ArrayList<String>();
+        expectedQueries.add("CREATE MATERIALIZED VIEW zuiolView REFRESH ON DEMAND WITH PRIMARY KEY AS select * from Table1");
 
-        int i = 0;
+        Sql[] sql = SqlGeneratorFactory.getInstance().generateSql(change.generateStatements(database)[0], database);
+        assertEquals( "wrong number of statements generated", expectedQueries.size(), sql.length );
+        assertEquals( " SQL Incorrect", expectedQueries.get(0), sql[0].toSql());
 
-        for (ChangeSet changeSet : changeSets) {
-            for (Change change : changeSet.getChanges()) {
-                Sql[] sql = SqlGeneratorFactory.getInstance().generateSql(change.generateStatements(database)[0], database);
-                if (i == 4) {
-                    assertEquals(expectedQuery.get(0), sql[0].toSql());
-                }
-            }
-            i++;
-        }
+        // Test CreateMaterializedViewTest6
+        expectedQueries.clear();
+        expectedQueries.add("CREATE MATERIALIZED VIEW zuiolTable ON PREBUILT TABLE REFRESH ON DEMAND WITH PRIMARY KEY AS select * from Table1");
+        changeSet = changeSets.get(5);
+        assertEquals("Wrong number of changes found in changeset CreateMaterializedViewTest5", 1, changeSet.getChanges().size());
+        change = changeSet.getChanges().get(0);
+
+        sql = SqlGeneratorFactory.getInstance().generateSql(change.generateStatements(database)[0], database);
+        assertEquals( "wrong number of statements generated", expectedQueries.size(), sql.length );
+        assertEquals(expectedQueries.get(0), sql[0].toSql());
+
+        // Test CreateMaterializedViewTest7
+        expectedQueries.clear();
+        expectedQueries.add("CREATE MATERIALIZED VIEW zuiolView2 BUILD DEFERRED REFRESH ON COMMIT FORCE WITH ROWID ENABLE QUERY REWRITE AS select * from Table1");
+        changeSet = changeSets.get(6);
+        assertEquals("Wrong number of changes found in changeset CreateMaterializedViewTest5", 1, changeSet.getChanges().size());
+        change = changeSet.getChanges().get(0);
+
+        sql = SqlGeneratorFactory.getInstance().generateSql(change.generateStatements(database)[0], database);
+        assertEquals( "wrong number of statements generated", expectedQueries.size(), sql.length );
+        assertEquals(expectedQueries.get(0), sql[0].toSql());
     }
 
     @Test

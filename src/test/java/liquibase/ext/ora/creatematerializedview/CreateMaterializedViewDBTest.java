@@ -42,7 +42,9 @@ public class CreateMaterializedViewDBTest extends BaseTestCase {
         loadedDataSet = getDataSet();
 
         Assertion.assertEquals(loadedDataSet, actualDataSet);
-        liquiBase.rollback(1, (String) null);
+        // we *need* to roll these back here, as the CleanDB command does not know
+        // to drop materialized views
+        liquiBase.rollback(3, (String) null);
     }
 
 }

@@ -4,8 +4,8 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:ora="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog ../../../../../java/liquibase/ext/ora/xml/dbchangelog-2.0.xsd 
-        http://www.liquibase.org/xml/ns/dbchangelog-ext ../../../../../java/liquibase/ext/ora/xml/dbchangelog-ext.xsd ">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog ../dbchangelog-2.0.xsd 
+        http://www.liquibase.org/xml/ns/dbchangelog-ext ../dbchangelog-ext.xsd ">
 
     <changeSet author="zuiol" id="CreateMaterializedViewTest1">
         <createTable tableName="Table1">
@@ -34,6 +34,20 @@
 
     <changeSet author="zuiol" id="CreateMaterializedViewTest5">
         <ora:createMaterializedView subquery="select * from Table1" viewName="zuiolView"/>
+    </changeSet>
+
+    <changeSet author="kellerj" id="CreateMaterializedViewTest6">
+        <ora:createMaterializedView subquery="select * from Table1" viewName="zuiolTable" enableOnPrebuiltTable="true"/>
+    </changeSet>
+
+    <changeSet author="kellerj" id="CreateMaterializedViewTest7">
+        <ora:createMaterializedView subquery="select * from Table1" viewName="zuiolView2"
+        	buildDeferred="true"
+        	refreshType="force"
+        	refreshOnCommit="true"
+        	refreshWithRowid="true"
+        	queryRewrite="true"
+        	/>
     </changeSet>
 
 </databaseChangeLog>

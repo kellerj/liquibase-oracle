@@ -91,7 +91,7 @@ public class CreateMaterializedViewOracle extends AbstractSqlGenerator<CreateMat
         }
 
         if ( createMaterializedViewStatement.getRefreshType() != null ) {
-        	sql.append( createMaterializedViewStatement.getRefreshType().toUpperCase() );
+        	sql.append( createMaterializedViewStatement.getRefreshType().toUpperCase() ).append( " " );
         }
 
         if ( createMaterializedViewStatement.getRefreshWithRowid() != null && createMaterializedViewStatement.getRefreshWithRowid() ) {
