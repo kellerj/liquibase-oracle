@@ -1,7 +1,6 @@
 package liquibase.ext.ora.creatematerializedview;
 
 import liquibase.statement.AbstractSqlStatement;
-import liquibase.statement.SqlStatement;
 
 public class CreateMaterializedViewStatement extends AbstractSqlStatement {
     private String schemaName;
@@ -12,9 +11,13 @@ public class CreateMaterializedViewStatement extends AbstractSqlStatement {
     private Boolean usingIndex;
     private String tableSpace;
     private Boolean forUpdate;
-    private String queryRewrite;
+    private Boolean queryRewrite;
     private String subquery;
-    private String enableOnPrebuiltTable;
+    private Boolean enableOnPrebuiltTable;
+    private Boolean buildDeferred;
+    private String refreshType;
+    private Boolean refreshOnCommit;
+    private Boolean refreshWithRowid;
 
     public CreateMaterializedViewStatement(String viewName, String subquery) {
         this.viewName = viewName;
@@ -85,11 +88,11 @@ public class CreateMaterializedViewStatement extends AbstractSqlStatement {
         this.forUpdate = forUpdate;
     }
 
-    public String getQueryRewrite() {
+    public Boolean getQueryRewrite() {
         return queryRewrite;
     }
 
-    public void setQueryRewrite(String queryRewrite) {
+    public void setQueryRewrite(Boolean queryRewrite) {
         this.queryRewrite = queryRewrite;
     }
 
@@ -101,11 +104,43 @@ public class CreateMaterializedViewStatement extends AbstractSqlStatement {
         this.subquery = subquery;
     }
 
-    public String getEnableOnPrebuiltTable() {
+    public Boolean getEnableOnPrebuiltTable() {
       return enableOnPrebuiltTable;
     }
-    
-    public void setEnableOnPrebuiltTable(String enableOnPrebuiltTable) {
+
+    public void setEnableOnPrebuiltTable(Boolean enableOnPrebuiltTable) {
       this.enableOnPrebuiltTable=enableOnPrebuiltTable;
     }
+
+	public Boolean getBuildDeferred() {
+		return buildDeferred;
+	}
+
+	public void setBuildDeferred(Boolean buildDeferred) {
+		this.buildDeferred = buildDeferred;
+	}
+
+	public String getRefreshType() {
+		return refreshType;
+	}
+
+	public void setRefreshType(String refreshType) {
+		this.refreshType = refreshType;
+	}
+
+	public Boolean getRefreshOnCommit() {
+		return refreshOnCommit;
+	}
+
+	public void setRefreshOnCommit(Boolean refreshOnCommit) {
+		this.refreshOnCommit = refreshOnCommit;
+	}
+
+	public Boolean getRefreshWithRowid() {
+		return refreshWithRowid;
+	}
+
+	public void setRefreshWithRowid(Boolean refreshWithRowid) {
+		this.refreshWithRowid = refreshWithRowid;
+	}
 }

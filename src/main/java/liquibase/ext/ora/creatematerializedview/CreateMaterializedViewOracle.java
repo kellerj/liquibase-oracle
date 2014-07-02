@@ -10,62 +10,94 @@ import liquibase.sqlgenerator.core.AbstractSqlGenerator;
 
 public class CreateMaterializedViewOracle extends AbstractSqlGenerator<CreateMaterializedViewStatement> {
 
-    public boolean supports(CreateMaterializedViewStatement createMaterializedViewStatement, Database database) {
+    @Override
+	public boolean supports(CreateMaterializedViewStatement createMaterializedViewStatement, Database database) {
         return database instanceof OracleDatabase;
     }
 
-    public ValidationErrors validate(CreateMaterializedViewStatement createMaterializedViewStatement, Database database, SqlGeneratorChain sqlGeneratorChain) {
+    @Override
+	public ValidationErrors validate(CreateMaterializedViewStatement createMaterializedViewStatement, Database database, SqlGeneratorChain sqlGeneratorChain) {
         ValidationErrors validationErrors = new ValidationErrors();
         validationErrors.checkRequiredField("viewName", createMaterializedViewStatement.getViewName());
         validationErrors.checkRequiredField("subquery", createMaterializedViewStatement.getSubquery());
         return validationErrors;
     }
 
-    public Sql[] generateSql(CreateMaterializedViewStatement createMaterializedViewStatement, Database database, SqlGeneratorChain sqlGeneratorChain) {
+    @Override
+	public Sql[] generateSql(CreateMaterializedViewStatement createMaterializedViewStatement, Database database, SqlGeneratorChain sqlGeneratorChain) {
         StringBuilder sql = new StringBuilder();
 
         sql.append("CREATE MATERIALIZED VIEW ");
-        if (createMaterializedViewStatement.getSchemaName() != null)
-            sql.append(createMaterializedViewStatement.getSchemaName()).append(".");
+        if (createMaterializedViewStatement.getSchemaName() != null) {
+			sql.append(createMaterializedViewStatement.getSchemaName()).append(".");
+		}
         if (createMaterializedViewStatement.getViewName() != null) {
             sql.append(createMaterializedViewStatement.getViewName())
                     .append(" ");
         }
 
-        if (createMaterializedViewStatement.getColumnAliases() != null)
-            sql.append("(")
+        if (createMaterializedViewStatement.getColumnAliases() != null) {
+			sql.append("(")
                     .append(createMaterializedViewStatement.getColumnAliases())
                     .append(") ");
+		}
         if (createMaterializedViewStatement.getObjectType() != null) {
-            sql.append("OFF ");
-            if (createMaterializedViewStatement.getSchemaName() != null)
-                sql.append(createMaterializedViewStatement.getSchemaName());
+            sql.append("OF ");
+            if (createMaterializedViewStatement.getSchemaName() != null) {
+				sql.append(createMaterializedViewStatement.getSchemaName());
+			}
             sql.append(createMaterializedViewStatement.getObjectType())
                     .append(" ");
         }
-        
-        if(createMaterializedViewStatement.getEnableOnPrebuiltTable() != null && createMaterializedViewStatement.getEnableOnPrebuiltTable() == "true") {
-          sql.append("ON PREBUILT TABLE ");
-        }
-        
-        if (createMaterializedViewStatement.getReducedPrecision() != null) {
-            if (createMaterializedViewStatement.getReducedPrecision())
-                sql.append("WITH ");
-            else
-                sql.append("WITHOUT ");
 
-            sql.append("REDUCED PRECISION ");
+        if(createMaterializedViewStatement.getEnableOnPrebuiltTable() != null && createMaterializedViewStatement.getEnableOnPrebuiltTable() ) {
+          sql.append("ON PREBUILT TABLE ");
+          if (createMaterializedViewStatement.getReducedPrecision() != null) {
+              if (createMaterializedViewStatement.getReducedPrecision()) {
+				sql.append("WITH ");
+			} else {
+				sql.append("WITHOUT ");
+			}
+
+              sql.append("REDUCED PRECISION ");
+          }
+        } else {
+        	if ( createMaterializedViewStatement.getBuildDeferred() != null ) {
+        		if ( createMaterializedViewStatement.getBuildDeferred() ) {
+        			sql.append("BUILD DEFERRED ");
+        		} else {
+        			sql.append("BUILD IMMEDIATE ");
+        		}
+        	}
         }
 
         if (createMaterializedViewStatement.getUsingIndex() != null) {
             if (createMaterializedViewStatement.getUsingIndex()) {
                 sql.append("USING INDEX ");
                 if (createMaterializedViewStatement.getTableSpace() != null) {
-                    sql.append(createMaterializedViewStatement.getTableSpace())
+                	sql.append("TABLESPACE ")
+                			.append(createMaterializedViewStatement.getTableSpace())
                             .append(" ");
                 }
-            } else
-                sql.append("USING NO INDEX ");
+            } else {
+				sql.append("USING NO INDEX ");
+			}
+        }
+
+        if ( createMaterializedViewStatement.getRefreshOnCommit() != null && createMaterializedViewStatement.getRefreshOnCommit() ) {
+        	sql.append( "REFRESH ON COMMIT " );
+        } else {
+        	sql.append( "REFRESH ON DEMAND " );
+        }
+
+        if ( createMaterializedViewStatement.getRefreshType() != null ) {
+        	sql.append( createMaterializedViewStatement.getRefreshType().toUpperCase() );
+        }
+
+        if ( createMaterializedViewStatement.getRefreshWithRowid() != null && createMaterializedViewStatement.getRefreshWithRowid() ) {
+        	sql.append( "WITH ROWID " );
+        } else {
+        	sql.append( "WITH PRIMARY KEY " );
         }
 
         if (createMaterializedViewStatement.getForUpdate() != null) {
@@ -74,13 +106,18 @@ public class CreateMaterializedViewOracle extends AbstractSqlGenerator<CreateMat
             }
         }
 
-        if (createMaterializedViewStatement.getQueryRewrite() != null && createMaterializedViewStatement.getQueryRewrite() == "enable") {
-            sql.append("ENABLE QUERY REWRITE ");
+        if (createMaterializedViewStatement.getQueryRewrite() != null ) {
+        	if ( createMaterializedViewStatement.getQueryRewrite() ) {
+                sql.append("ENABLE QUERY REWRITE ");
+        	} else {
+                sql.append("DISABLE QUERY REWRITE ");
+        	}
         }
 
         sql.append("AS ");
-        if (createMaterializedViewStatement.getSubquery() != null)
-            sql.append(createMaterializedViewStatement.getSubquery());
+        if (createMaterializedViewStatement.getSubquery() != null) {
+			sql.append(createMaterializedViewStatement.getSubquery());
+		}
 
         return new Sql[]
                 {
