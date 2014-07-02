@@ -34,15 +34,13 @@ public class AddDeferredPrimaryKeyDBTest extends BaseTestCase {
         return loadedDataSet;
     }
 
-    // TODO: Remove Errors!
     @Test
     public void testCompare() throws Exception {
         QueryDataSet actualDataSet = new QueryDataSet(getConnection());
 
         liquiBase.update(new Contexts());
 
-        actualDataSet.addTable(TABLE_NAME, "select constraint_name as primary_key_name from " + TABLE_NAME
-                + " WHERE constraint_type = 'P' and constraint_name = 'PK_ADDDEFERREDPRIMARYKEYTEST'");
+        actualDataSet.addTable(TABLE_NAME, "select constraint_name from USER_CONSTRAINTS WHERE constraint_type = 'P' AND table_name = 'ADDDEFERREDPRIMARYKEYTEST'");
         loadedDataSet = getDataSet();
 
         Assertion.assertEquals(loadedDataSet, actualDataSet);
