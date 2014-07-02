@@ -12,28 +12,34 @@ import liquibase.statement.SqlStatement;
 
 @DatabaseChange(name = "createSynonym", description = "Create synonym", priority = ChangeMetaData.PRIORITY_DEFAULT)
 public class CreateSynonymChange extends AbstractChange {
-	
-	private boolean replace = false;
-	private boolean isPublic = false;
+
+	private Boolean replace = Boolean.FALSE;
+	private Boolean isPublic = Boolean.FALSE;
 	private String objectName;
 	private String objectSchemaName;
 
 	private String synonymName;
 	private String synonymSchemaName;
 
-	public boolean isReplace() {
+	public Boolean getReplace() {
+		if ( replace == null ) {
+			replace = Boolean.FALSE;
+		}
 		return replace;
 	}
 
-	public void setReplace(boolean replace) {
+	public void setReplace(Boolean replace) {
 		this.replace = replace;
 	}
 
-	public boolean isPublic() {
+	public Boolean getPublic() {
+		if ( isPublic == null ) {
+			isPublic = Boolean.FALSE;
+		}
 		return isPublic;
 	}
 
-	public void setPublic(boolean isPublic) {
+	public void setPublic(Boolean isPublic) {
 		this.isPublic = isPublic;
 	}
 
@@ -77,12 +83,12 @@ public class CreateSynonymChange extends AbstractChange {
 	@Override
 	protected Change[] createInverses() {
 		DropSynonymChange inverse = new DropSynonymChange();
-		inverse.setPublic(isPublic());
+		inverse.setPublic(getPublic());
 		inverse.setSynonymName(getSynonymName());
 		inverse.setSynonymSchemaName(getSynonymSchemaName());
 		return new Change[] { inverse };
 	}
-	
+
 	@Override
 	public SqlStatement[] generateStatements(Database database) {
 		CreateSynonymStatement statement = new CreateSynonymStatement();
@@ -92,8 +98,8 @@ public class CreateSynonymChange extends AbstractChange {
 		statement.setSynonymName(getSynonymName());
 		statement.setSynonymSchemaName(getSynonymSchemaName());
 
-		statement.setReplace(isReplace());
-		statement.setPublic(isPublic());
+		statement.setReplace(getReplace());
+		statement.setPublic(getPublic());
 		return new SqlStatement[] { statement };
 	}
 

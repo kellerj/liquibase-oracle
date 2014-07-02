@@ -300,9 +300,9 @@
             <xsd:attribute name="public" type="xsd:boolean"/>
             <xsd:attribute name="replace" type="xsd:boolean"/>
             <xsd:attribute name="synonymSchemaName" type="xsd:string"/>
-            <xsd:attribute name="synonymName" type="xsd:string"/>
+            <xsd:attribute name="synonymName" type="xsd:string" use="required" />
             <xsd:attribute name="objectSchemaName" type="xsd:string"/>
-            <xsd:attribute name="objectName" type="xsd:string" />
+            <xsd:attribute name="objectName" type="xsd:string" use="required" />
         </xsd:complexType>
     </xsd:element>
 
@@ -312,7 +312,7 @@
             <xsd:attribute name="public" type="xsd:boolean"/>
             <xsd:attribute name="force" type="xsd:boolean"/>
             <xsd:attribute name="synonymSchemaName" type="xsd:string"/>
-            <xsd:attribute name="synonymName" type="xsd:string"/>
+            <xsd:attribute name="synonymName" type="xsd:string" use="required" />
         </xsd:complexType>
     </xsd:element>
 

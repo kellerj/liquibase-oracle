@@ -3,28 +3,18 @@ package liquibase.ext.ora.dropSynonym;
 import java.text.MessageFormat;
 
 import liquibase.change.AbstractChange;
-import liquibase.change.Change;
 import liquibase.change.ChangeMetaData;
 import liquibase.change.DatabaseChange;
 import liquibase.database.Database;
-import liquibase.ext.ora.dropcheck.DropCheckChange;
 import liquibase.statement.SqlStatement;
 
 @DatabaseChange(name = "dropSynonym", description = "Drop synonym", priority = ChangeMetaData.PRIORITY_DEFAULT)
 public class DropSynonymChange extends AbstractChange {
 
-	private boolean isPublic = false;
 	private String synonymSchemaName;
 	private String synonymName;
-	private boolean force = false;
-
-	public boolean isPublic() {
-		return isPublic;
-	}
-
-	public void setPublic(boolean isPublic) {
-		this.isPublic = isPublic;
-	}
+	private Boolean force = Boolean.FALSE;
+	private Boolean isPublic = Boolean.FALSE;
 
 	public String getSynonymName() {
 		return synonymName;
@@ -42,11 +32,22 @@ public class DropSynonymChange extends AbstractChange {
 		this.synonymSchemaName = synonymSchemaName;
 	}
 
-	public boolean isForce() {
+	public Boolean getPublic() {
+		if ( isPublic == null ) {
+			isPublic = Boolean.FALSE;
+		}
+		return isPublic;
+	}
+
+	public void setPublic(Boolean isPublic) {
+		this.isPublic = isPublic;
+	}
+
+	public Boolean getForce() {
 		return force;
 	}
 
-	public void setForce(boolean force) {
+	public void setForce(Boolean force) {
 		this.force = force;
 	}
 
@@ -58,10 +59,10 @@ public class DropSynonymChange extends AbstractChange {
 	@Override
 	public SqlStatement[] generateStatements(Database database) {
 		DropSynonymStatement statement = new DropSynonymStatement();
-		statement.setForce(isForce());
+		statement.setForce(getForce());
 		statement.setSynonymName(getSynonymName());
 		statement.setSynonymSchemaName(getSynonymSchemaName());
-		statement.setPublic(isPublic());
+		statement.setPublic(getPublic());
 		return new SqlStatement[] { statement };
 	}
 
