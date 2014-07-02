@@ -1,5 +1,6 @@
 package liquibase.ext.ora.grant.addgrant;
 
+import liquibase.Contexts;
 import liquibase.ext.ora.testing.BaseTestCase;
 
 import org.dbunit.Assertion;
@@ -37,7 +38,7 @@ public class GrantObjectPermissionDBTest extends BaseTestCase {
     public void testCompare() throws Exception {
         QueryDataSet actualDataSet = new QueryDataSet(getConnection());
 
-        liquiBase.update((String) null);
+        liquiBase.update(new Contexts());
         actualDataSet.addTable("USER_TAB_PRIVS_MADE", "select PRIVILEGE from USER_TAB_PRIVS_MADE WHERE TABLE_NAME = 'ADDGRANT' ORDER BY 1");
         loadedDataSet = getDataSet();
 

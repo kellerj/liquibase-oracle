@@ -15,7 +15,7 @@ import liquibase.database.Database;
 import liquibase.database.core.OracleDatabase;
 import liquibase.ext.ora.testing.BaseTestCase;
 import liquibase.parser.ChangeLogParserFactory;
-import liquibase.resource.FileSystemResourceAccessor;
+import liquibase.resource.ClassLoaderResourceAccessor;
 import liquibase.resource.ResourceAccessor;
 import liquibase.sql.Sql;
 import liquibase.sqlgenerator.SqlGeneratorFactory;
@@ -88,7 +88,7 @@ public class GrantObjectPermissionChangeTest extends BaseTestCase {
     @Test
     public void parseAndGenerate() throws Exception {
         Database database = liquiBase.getDatabase();
-        ResourceAccessor resourceAccessor = new FileSystemResourceAccessor("src/test/java");
+        ResourceAccessor resourceAccessor = new ClassLoaderResourceAccessor();
 
         ChangeLogParameters changeLogParameters = new ChangeLogParameters();
 
