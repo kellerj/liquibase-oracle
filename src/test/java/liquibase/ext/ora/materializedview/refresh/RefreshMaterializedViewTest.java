@@ -1,4 +1,4 @@
-package liquibase.ext.ora.refreshmaterializedview;
+package liquibase.ext.ora.materializedview.refresh;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,6 +15,8 @@ import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
 import liquibase.database.Database;
 import liquibase.database.core.OracleDatabase;
+import liquibase.ext.ora.materializedview.refresh.RefreshMaterializedViewChange;
+import liquibase.ext.ora.materializedview.refresh.RefreshMaterializedViewStatement;
 import liquibase.ext.ora.testing.BaseTestCase;
 import liquibase.parser.ChangeLogParserFactory;
 import liquibase.resource.ClassLoaderResourceAccessor;

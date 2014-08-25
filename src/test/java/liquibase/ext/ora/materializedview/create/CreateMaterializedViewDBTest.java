@@ -1,4 +1,4 @@
-package liquibase.ext.ora.creatematerializedview;
+package liquibase.ext.ora.materializedview.create;
 
 import liquibase.ext.ora.testing.BaseTestCase;
 
