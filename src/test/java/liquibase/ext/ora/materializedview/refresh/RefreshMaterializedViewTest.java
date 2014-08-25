@@ -14,8 +14,6 @@ import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
 import liquibase.database.Database;
 import liquibase.database.core.OracleDatabase;
-import liquibase.ext.ora.materializedview.refresh.RefreshMaterializedViewChange;
-import liquibase.ext.ora.materializedview.refresh.RefreshMaterializedViewStatement;
 import liquibase.ext.ora.testing.BaseTestCase;
 import liquibase.parser.ChangeLogParserFactory;
 import liquibase.resource.ClassLoaderResourceAccessor;
@@ -31,7 +29,7 @@ public class RefreshMaterializedViewTest extends BaseTestCase {
 
     @Before
     public void setUp() throws Exception {
-        changeLogFile = "liquibase/ext/ora/refreshmaterializedview/changelog.test.xml";
+        changeLogFile = "liquibase/ext/ora/materializedview/refresh/changelog.test.xml";
         connectToDB();
         cleanDB();
     }

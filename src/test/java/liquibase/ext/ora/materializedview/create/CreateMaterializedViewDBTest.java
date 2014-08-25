@@ -19,7 +19,7 @@ public class CreateMaterializedViewDBTest extends BaseTestCase {
 
     @Before
     public void setUp() throws Exception {
-        changeLogFile = "liquibase/ext/ora/creatematerializedview/changelog.test.xml";
+        changeLogFile = "liquibase/ext/ora/materializedview/create/changelog.test.xml";
         connectToDB();
         cleanDB();
     }
@@ -30,7 +30,7 @@ public class CreateMaterializedViewDBTest extends BaseTestCase {
 
     protected IDataSet getDataSet() throws Exception {
         loadedDataSet = new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream(
-                "liquibase/ext/ora/creatematerializedview/input.xml"));
+                "liquibase/ext/ora/materializedview/create/input.xml"));
         return loadedDataSet;
     }
 
