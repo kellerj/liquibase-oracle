@@ -1,4 +1,4 @@
-package liquibase.ext.ora.dropmaterializedview;
+package liquibase.ext.ora.materializedview.create;
 
 import liquibase.Contexts;
 import liquibase.ext.ora.testing.BaseTestCase;
@@ -12,14 +12,14 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DropMaterializedViewDBTest extends BaseTestCase {
+public class CreateMaterializedViewDBTest extends BaseTestCase {
 
     private IDataSet loadedDataSet;
-    private final String TABLE_NAME = "USER_MVIEWS";
+    private final String TABLE_NAME = "ZUIOLTABLE";
 
     @Before
     public void setUp() throws Exception {
-        changeLogFile = "liquibase/ext/ora/dropmaterializedview/changelog.test.xml";
+        changeLogFile = "liquibase/ext/ora/creatematerializedview/changelog.test.xml";
         connectToDB();
         cleanDB();
     }
@@ -30,7 +30,7 @@ public class DropMaterializedViewDBTest extends BaseTestCase {
 
     protected IDataSet getDataSet() throws Exception {
         loadedDataSet = new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream(
-                "liquibase/ext/ora/dropmaterializedview/input.xml"));
+                "liquibase/ext/ora/creatematerializedview/input.xml"));
         return loadedDataSet;
     }
 
@@ -43,6 +43,9 @@ public class DropMaterializedViewDBTest extends BaseTestCase {
         loadedDataSet = getDataSet();
 
         Assertion.assertEquals(loadedDataSet, actualDataSet);
+        // we *need* to roll these back here, as the CleanDB command does not know
+        // to drop materialized views
+        liquiBase.rollback(3, new Contexts());
     }
 
 }
