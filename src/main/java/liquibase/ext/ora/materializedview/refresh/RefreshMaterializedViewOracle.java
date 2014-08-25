@@ -1,4 +1,4 @@
-package liquibase.ext.ora.refreshmaterializedview;
+package liquibase.ext.ora.materializedview.refresh;
 
 import liquibase.database.Database;
 import liquibase.database.core.OracleDatabase;

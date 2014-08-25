@@ -1,4 +1,4 @@
-package liquibase.ext.ora.refreshmaterializedview;
+package liquibase.ext.ora.materializedview.refresh;
 
 import liquibase.change.AbstractChange;
 import liquibase.change.ChangeMetaData;

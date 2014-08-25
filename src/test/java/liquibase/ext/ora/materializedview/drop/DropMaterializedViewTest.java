@@ -1,4 +1,4 @@
-package liquibase.ext.ora.dropmaterializedview;
+package liquibase.ext.ora.materializedview.drop;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -15,6 +15,8 @@ import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
 import liquibase.database.Database;
 import liquibase.database.core.OracleDatabase;
+import liquibase.ext.ora.materializedview.drop.DropMaterializedViewChange;
+import liquibase.ext.ora.materializedview.drop.DropMaterializedViewStatement;
 import liquibase.ext.ora.testing.BaseTestCase;
 import liquibase.parser.ChangeLogParserFactory;
 import liquibase.resource.ClassLoaderResourceAccessor;

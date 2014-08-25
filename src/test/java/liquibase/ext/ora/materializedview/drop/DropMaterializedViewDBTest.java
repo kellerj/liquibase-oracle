@@ -1,4 +1,4 @@
-package liquibase.ext.ora.dropmaterializedview;
+package liquibase.ext.ora.materializedview.drop;
 
 import liquibase.ext.ora.testing.BaseTestCase;
 
