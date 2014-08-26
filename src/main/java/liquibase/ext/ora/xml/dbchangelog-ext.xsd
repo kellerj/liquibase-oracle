@@ -232,6 +232,7 @@
     </xsd:element>
     
     <!-- Refresh Materialized View -->
+    
     <xsd:element name="refreshMaterializedView">
         <xsd:complexType>
             <xsd:attribute name="viewName" type="xsd:string" use="required" />
