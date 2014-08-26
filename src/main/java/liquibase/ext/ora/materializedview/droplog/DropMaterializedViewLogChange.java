@@ -6,7 +6,7 @@ import liquibase.change.DatabaseChange;
 import liquibase.database.Database;
 import liquibase.statement.SqlStatement;
 
-@DatabaseChange(name="DropMaterializedViewLog", description = "Drop materialized view log", priority = ChangeMetaData.PRIORITY_DEFAULT)
+@DatabaseChange(name="dropMaterializedViewLog", description = "Drop materialized view log", priority = ChangeMetaData.PRIORITY_DEFAULT)
 public class DropMaterializedViewLogChange extends AbstractChange {
     private String schemaName;
     private String tableName;
