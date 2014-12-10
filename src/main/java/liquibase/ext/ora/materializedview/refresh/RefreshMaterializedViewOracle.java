@@ -37,14 +37,13 @@ public class RefreshMaterializedViewOracle extends AbstractSqlGenerator<RefreshM
         }
         sql.append(statement.getViewName());
         sql.append( "','" );
-
         String refreshType = statement.getRefreshType();
         if (refreshType.equals("fast")) {
-            sql.append( 'F' );
+    		sql.append( 'F' );
         } else if (refreshType.equals("complete")) {
-        		sql.append( 'C' );
-        } else if (refreshType.equals("complete")) {
-        		sql.append( '?' );
+    		sql.append( 'C' );
+        } else if (refreshType.equals("force")) {
+       		sql.append( '?' );
         }
         sql.append( "',ATOMIC_REFRESH=>" ).append( statement.getAtomicRefresh().toString().toUpperCase() );
         sql.append( "); END;" );

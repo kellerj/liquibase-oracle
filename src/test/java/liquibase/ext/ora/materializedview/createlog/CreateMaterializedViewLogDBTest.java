@@ -45,7 +45,7 @@ public class CreateMaterializedViewLogDBTest extends BaseTestCase {
 
         // we *need* to roll these back here (before the assertion), as the CleanDB command does not know
         // to drop materialized view logs
-        liquiBase.rollback(1, new Contexts());
+        liquiBase.rollback(1, (String) null);
 
         Assertion.assertEquals(loadedDataSet, actualDataSet);
     }

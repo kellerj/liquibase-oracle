@@ -9,7 +9,6 @@ import java.util.List;
 import liquibase.change.Change;
 import liquibase.change.ChangeFactory;
 import liquibase.change.ChangeMetaData;
-import liquibase.changelog.ChangeLogIterator;
 import liquibase.changelog.ChangeLogParameters;
 import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
@@ -62,7 +61,7 @@ public class CreateMaterializedViewTest extends BaseTestCase {
         change.setColumnAliases("COLUMN_ALIASES");
         change.setObjectType("OBJECT_TYPE");
         change.setTableSpace("TABLE_SPACE");
-        change.setQueryRewrite("QUERY_REWRITE");
+        change.setQueryRewrite(false);
         change.setSubquery("SUBQUERY");
 
         change.setReducedPrecision(true);

@@ -7,8 +7,7 @@ import liquibase.sql.Sql;
 import liquibase.sql.UnparsedSql;
 import liquibase.sqlgenerator.SqlGeneratorChain;
 import liquibase.sqlgenerator.core.AbstractSqlGenerator;
-
-import org.apache.commons.lang.StringUtils;
+import liquibase.util.StringUtils;
 
 public class CreateMaterializedViewLogOracle extends AbstractSqlGenerator<CreateMaterializedViewLogStatement> {
 

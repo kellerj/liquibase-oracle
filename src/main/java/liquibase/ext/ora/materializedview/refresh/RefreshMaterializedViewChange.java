@@ -1,9 +1,12 @@
 package liquibase.ext.ora.materializedview.refresh;
 
 import liquibase.change.AbstractChange;
+import liquibase.change.Change;
 import liquibase.change.ChangeMetaData;
 import liquibase.change.DatabaseChange;
 import liquibase.database.Database;
+import liquibase.exception.RollbackImpossibleException;
+import liquibase.ext.ora.materializedview.drop.DropMaterializedViewChange;
 import liquibase.statement.SqlStatement;
 
 @DatabaseChange(name="refreshMaterializedView", description = "Refresh Materialized View", priority = ChangeMetaData.PRIORITY_DEFAULT)
@@ -43,6 +46,14 @@ public class RefreshMaterializedViewChange extends AbstractChange {
         statement.setRefreshType(getRefreshType());
 
         return new SqlStatement[]{statement};
+    }
+    
+    /**
+     * Return nothing, you can't revert an MV refresh, but nor do we need to blow up with a "rollback not possible". 
+     */
+    @Override
+	protected Change[] createInverses() {
+        return new Change[]{};
     }
 
 	public Boolean getAtomicRefresh() {

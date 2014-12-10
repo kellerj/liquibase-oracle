@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import liquibase.Contexts;
+import liquibase.LabelExpression;
 import liquibase.change.Change;
 import liquibase.change.ChangeFactory;
 import liquibase.change.ChangeMetaData;
@@ -79,7 +80,7 @@ public class DropMaterializedViewLogTest extends BaseTestCase {
         DatabaseChangeLog changeLog = ChangeLogParserFactory.getInstance().getParser(changeLogFile, resourceAccessor).parse(changeLogFile,
                 changeLogParameters, resourceAccessor);
 
-        liquiBase.checkLiquibaseTables( false, changeLog, new Contexts() );
+        liquiBase.checkLiquibaseTables( false, changeLog, new Contexts(), new LabelExpression() );
         changeLog.validate(database);
 
         List<ChangeSet> changeSets = changeLog.getChangeSets();

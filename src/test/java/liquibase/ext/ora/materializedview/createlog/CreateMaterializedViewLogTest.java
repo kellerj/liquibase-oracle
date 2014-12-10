@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import liquibase.Contexts;
+import liquibase.LabelExpression;
 import liquibase.change.Change;
 import liquibase.change.ChangeFactory;
 import liquibase.change.ChangeMetaData;
@@ -83,7 +84,7 @@ public class CreateMaterializedViewLogTest extends BaseTestCase {
         DatabaseChangeLog changeLog = ChangeLogParserFactory.getInstance().getParser(changeLogFile, resourceAccessor).parse(changeLogFile,
                 changeLogParameters, resourceAccessor);
 
-        liquiBase.checkLiquibaseTables( false, changeLog, new Contexts() );
+        liquiBase.checkLiquibaseTables( false, changeLog, new Contexts(), new LabelExpression() );
         changeLog.validate(database);
 
         List<ChangeSet> changeSets = changeLog.getChangeSets();
@@ -115,6 +116,6 @@ public class CreateMaterializedViewLogTest extends BaseTestCase {
     @Test
     public void test() throws Exception {
         liquiBase.update(new Contexts());
-        liquiBase.rollback(1, new Contexts());
+        liquiBase.rollback(1, (String) null);
     }
 }
