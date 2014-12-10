@@ -196,8 +196,29 @@
             <xsd:attribute name="schemaName" type="xsd:string"></xsd:attribute>
         </xsd:complexType>
     </xsd:element>
+
+    <!-- Create Materialized View Log -->
+
+    <xsd:element name="createMaterializedViewLog">
+        <xsd:complexType>
+            <xsd:attribute name="tableName" type="xsd:string" use="required" />
+            <xsd:attribute name="schemaName" type="xsd:string" />
+            <xsd:attribute name="tableSpace" type="xsd:string" />
+            <xsd:attribute name="refreshWithRowid" type="xsd:boolean" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- Drop Materialized View Log -->
+
+    <xsd:element name="dropMaterializedViewLog">
+        <xsd:complexType>
+            <xsd:attribute name="tableName" type="xsd:string" use="required" />
+            <xsd:attribute name="schemaName" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
     
     <!-- Refresh Materialized View -->
+    
     <xsd:element name="refreshMaterializedView">
         <xsd:complexType>
             <xsd:attribute name="viewName" type="xsd:string" use="required" />

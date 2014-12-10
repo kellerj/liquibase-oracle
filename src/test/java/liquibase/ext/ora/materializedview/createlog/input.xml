@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <USER_MVIEW_LOGS MASTER="MVLOG_TABLE" PRIMARY_KEY="YES" ROWIDS="NO" />
+    <USER_MVIEW_LOGS MASTER="MVLOG_TABLE_2" PRIMARY_KEY="NO" ROWIDS="YES" />
+</dataset>
