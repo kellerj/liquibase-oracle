@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ora="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog ../../../../../liquibase/ext/ora/xml/dbchangelog-3.2.xsd 
+        http://www.liquibase.org/xml/ns/dbchangelog-ext ../../../../../liquibase/ext/ora/xml/dbchangelog-ext.xsd ">
+
+    <changeSet author="kellerj" id="CreateMaterializedViewLogTest1">
+        <createTable tableName="MVLOG_TABLE">
+            <column name="one" type="varchar2(30)">
+            	<constraints primaryKey="true" />
+            </column>
+            <column name="two" type="varchar2(30)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet author="kellerj" id="CreateMaterializedViewLogTest2">
+        <createTable tableName="MVLOG_TABLE_2">
+            <column name="one" type="varchar2(30)" />
+            <column name="two" type="varchar2(30)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet author="kellerj" id="CreateMaterializedViewLogTest3">
+        <ora:createMaterializedViewLog tableName="MVLOG_TABLE"/>
+        <ora:createMaterializedViewLog tableName="MVLOG_TABLE_2" refreshWithRowid="true" />
+    </changeSet>
+
+</databaseChangeLog>

@@ -15,8 +15,6 @@ import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
 import liquibase.database.Database;
 import liquibase.database.core.OracleDatabase;
-import liquibase.ext.ora.materializedview.drop.DropMaterializedViewChange;
-import liquibase.ext.ora.materializedview.drop.DropMaterializedViewStatement;
 import liquibase.ext.ora.testing.BaseTestCase;
 import liquibase.parser.ChangeLogParserFactory;
 import liquibase.resource.ClassLoaderResourceAccessor;
@@ -32,7 +30,7 @@ public class DropMaterializedViewTest extends BaseTestCase {
 
     @Before
     public void setUp() throws Exception {
-        changeLogFile = "liquibase/ext/ora/dropmaterializedview/changelog.test.xml";
+    	changeLogFile = "liquibase/ext/ora/materializedview/drop/changelog.test.xml";
         connectToDB();
         cleanDB();
     }
