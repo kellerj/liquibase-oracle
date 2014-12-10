@@ -18,8 +18,13 @@ public class CreateMaterializedViewChange extends AbstractChange {
     private Boolean usingIndex;
     private String tableSpace;
     private Boolean forUpdate;
-    private String queryRewrite;
+    private Boolean queryRewrite;
     private String subquery;
+    private Boolean enableOnPrebuiltTable;
+    private Boolean buildDeferred;
+    private String refreshType;
+    private Boolean refreshOnCommit;
+    private Boolean refreshWithRowid;
 
     public String getSchemaName() {
         return schemaName;
@@ -85,14 +90,6 @@ public class CreateMaterializedViewChange extends AbstractChange {
         this.forUpdate = forUpdate;
     }
 
-    public String getQueryRewrite() {
-        return queryRewrite;
-    }
-
-    public void setQueryRewrite(String queryRewrite) {
-        this.queryRewrite = queryRewrite;
-    }
-
     public String getSubquery() {
         return subquery;
     }
@@ -101,11 +98,13 @@ public class CreateMaterializedViewChange extends AbstractChange {
         this.subquery = subquery;
     }
 
-    public String getConfirmationMessage() {
+    @Override
+	public String getConfirmationMessage() {
         return "Materialized view " + getViewName() + " has been created";
     }
 
-    protected Change[] createInverses() {
+    @Override
+	protected Change[] createInverses() {
         DropMaterializedViewChange inverse = new DropMaterializedViewChange();
         inverse.setSchemaName(getSchemaName());
         inverse.setViewName(getViewName());
@@ -114,7 +113,8 @@ public class CreateMaterializedViewChange extends AbstractChange {
         };
     }
 
-    public SqlStatement[] generateStatements(Database database) {
+    @Override
+	public SqlStatement[] generateStatements(Database database) {
         CreateMaterializedViewStatement statement = new CreateMaterializedViewStatement(getViewName(), getSubquery());
         statement.setSchemaName(getSchemaName());
         statement.setColumnAliases(getColumnAliases());
@@ -124,9 +124,61 @@ public class CreateMaterializedViewChange extends AbstractChange {
         statement.setTableSpace(getTableSpace());
         statement.setForUpdate(getForUpdate());
         statement.setQueryRewrite(getQueryRewrite());
-
+        statement.setEnableOnPrebuiltTable(getEnableOnPrebuiltTable());
+        statement.setBuildDeferred(getBuildDeferred());
+        statement.setRefreshType(getRefreshType());
+        statement.setRefreshOnCommit(getRefreshOnCommit());
+        statement.setRefreshWithRowid(getRefreshWithRowid());
 
         return new SqlStatement[]{statement};
     }
+
+	public Boolean getEnableOnPrebuiltTable() {
+		return enableOnPrebuiltTable;
+	}
+
+	public void setEnableOnPrebuiltTable(Boolean enableOnPrebuiltTable) {
+		this.enableOnPrebuiltTable = enableOnPrebuiltTable;
+	}
+
+	public Boolean getBuildDeferred() {
+		return buildDeferred;
+	}
+
+	public void setBuildDeferred(Boolean buildDeferred) {
+		this.buildDeferred = buildDeferred;
+	}
+
+	public String getRefreshType() {
+		return refreshType;
+	}
+
+	public void setRefreshType(String refreshType) {
+		this.refreshType = refreshType;
+	}
+
+	public Boolean getRefreshOnCommit() {
+		return refreshOnCommit;
+	}
+
+	public void setRefreshOnCommit(Boolean refreshOnCommit) {
+		this.refreshOnCommit = refreshOnCommit;
+	}
+
+	public Boolean getRefreshWithRowid() {
+		return refreshWithRowid;
+	}
+
+	public void setRefreshWithRowid(Boolean refreshWithRowid) {
+		this.refreshWithRowid = refreshWithRowid;
+	}
+
+	public void setQueryRewrite(Boolean queryRewrite) {
+		this.queryRewrite = queryRewrite;
+	}
+
+	public Boolean getQueryRewrite() {
+		return queryRewrite;
+	}
 
 }
