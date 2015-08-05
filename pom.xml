@@ -4,7 +4,7 @@
     <groupId>org.liquibase.ext</groupId>
     <artifactId>liquibase-oracle</artifactId>
     <name>Liquibase Oracle Extensions</name>
-    <version>3.3-SNAPSHOT</version>
+    <version>3.4.1</version>
 
      <licenses>
         <license>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>3.4.1</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
