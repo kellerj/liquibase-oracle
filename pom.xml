@@ -70,7 +70,7 @@
     <description>Some tags to work on Oracle DB.</description>
     <url>http://liquibase.jira.com/wiki/display/CONTRIB/Oracle+Extensions</url>
 
-	    <developers>
+    <developers>
         <developer>
             <id>nvoxland</id>
             <name>Nathan Voxland</name>
@@ -83,12 +83,21 @@
             </roles>
             <timezone>-6</timezone>
         </developer>
+        <developer>
+            <id>kellerj</id>
+            <name>Jonathan Keller</name>
+            <email>jhkeller@ucdavis.edu</email>
+            <roles>
+                <role>contributor</role>
+            </roles>
+            <timezone>-8</timezone>
+        </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:liquibase/liquibase-oracle.git</connection>
-        <url>scm:git:https://github.com/liquibase/liquibase-oracle.git</url>
-        <developerConnection>scm:git:git@github.com:liquibase/liquibase-oracle.git</developerConnection>
+        <connection>scm:git:git@github.com:kellerj/liquibase-oracle.git</connection>
+        <url>scm:git:https://github.com/kellerj/liquibase-oracle.git</url>
+        <developerConnection>scm:git:git@github.com:kellerj/liquibase-oracle.git</developerConnection>
     </scm>
 
     <build>
@@ -181,7 +190,7 @@
             </plugins>
         </pluginManagement>
     </build>
-
+<!-- 
     <distributionManagement>
         <repository>
             <id>sonatype-nexus-staging</id>
@@ -195,7 +204,7 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
+ -->
     <profiles>
         <profile>
             <id>release-sign-artifacts</id>
