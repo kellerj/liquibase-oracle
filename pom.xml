@@ -6,7 +6,7 @@
     <name>Liquibase Oracle Extensions</name>
     <description>Some tags to work on Oracle DB.</description>
     <url>http://liquibase.jira.com/wiki/display/CONTRIB/Oracle+Extensions</url>
-    <version>3.4.1-ucd</version>
+    <version>3.4.1-ucd-2-SNAPSHOT</version>
 
     <licenses>
         <license>
