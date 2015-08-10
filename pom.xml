@@ -4,9 +4,11 @@
     <groupId>org.liquibase.ext</groupId>
     <artifactId>liquibase-oracle</artifactId>
     <name>Liquibase Oracle Extensions</name>
-    <version>3.4.1</version>
+    <description>Some tags to work on Oracle DB.</description>
+    <url>http://liquibase.jira.com/wiki/display/CONTRIB/Oracle+Extensions</url>
+    <version>3.4.1-ucd</version>
 
-     <licenses>
+    <licenses>
         <license>
             <url>http://www.apache.org/licenses/LICENSE-2.0</url>
             <name>Apache License, Version 2.0</name>
@@ -14,15 +16,17 @@
     </licenses>
 
     <properties>
-        <oracle.version>11.2.0.3</oracle.version>
+        <oracle.version>11.2.0.1.0</oracle.version>
         <slf4j.version>1.7.5</slf4j.version>
         <junit.version>4.11</junit.version>
+        <liquibase.version>3.4.1</liquibase.version>
     </properties>
+    
     <dependencies>
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>${project.version}</version>
+            <version>${liquibase.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -60,15 +64,13 @@
         <!-- TO PHYSICALLY RUN TESTS AGAINST THE DATABASE UNCOMMENT THIS DEPENDENCY -->
         <!-- NOT ENABLE BY DEFAULT SO BUILDSERVER RUNS SUCCESSFULLY -->
         <!-- Download from http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html -->
-        <!--<dependency>-->
-            <!--<groupId>com.oracle</groupId>-->
-            <!--<artifactId>ojdbc6</artifactId>-->
-            <!--<version>${oracle.version}</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>oracle-driver</artifactId>
+            <version>${oracle.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-    <description>Some tags to work on Oracle DB.</description>
-    <url>http://liquibase.jira.com/wiki/display/CONTRIB/Oracle+Extensions</url>
 
     <developers>
         <developer>
@@ -99,6 +101,19 @@
         <url>scm:git:https://github.com/kellerj/liquibase-oracle.git</url>
         <developerConnection>scm:git:git@github.com:kellerj/liquibase-oracle.git</developerConnection>
     </scm>
+
+    <repositories>
+        <repository>
+	        <id>ucd-afs-dev</id>
+	        <url>https://kfs-dev.ucdavis.edu/share/maven-repo/</url>
+	        <releases>
+	            <enabled>true</enabled>
+	        </releases>
+	        <snapshots>
+	            <enabled>true</enabled>
+	        </snapshots>        
+        </repository>
+    </repositories>
 
     <build>
         <testResources>
@@ -189,7 +204,25 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
+	    <extensions>
+	        <!-- Enabling the use of SSH -->
+	        <extension>
+	            <groupId>org.apache.maven.wagon</groupId>
+	            <artifactId>wagon-ssh-external</artifactId>
+	            <version>2.9</version>
+	        </extension>
+	    </extensions>
+
     </build>
+
+	<distributionManagement>
+		<repository>
+			<id>ucd-afs-maven-ssh</id>
+			<url>scpexe://kurrency/opt/kuali-tools/share/maven-repo</url>
+		</repository>
+	</distributionManagement>
+
 <!-- 
     <distributionManagement>
         <repository>
@@ -204,7 +237,7 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
- -->
+
     <profiles>
         <profile>
             <id>release-sign-artifacts</id>
@@ -233,4 +266,5 @@
             </build>
         </profile>
     </profiles>
+ -->
 </project>
