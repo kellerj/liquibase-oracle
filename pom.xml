@@ -97,23 +97,10 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:kellerj/liquibase-oracle.git</connection>
-        <url>scm:git:https://github.com/kellerj/liquibase-oracle.git</url>
-        <developerConnection>scm:git:git@github.com:kellerj/liquibase-oracle.git</developerConnection>
+        <connection>scm:git:https://afs-dev.ucdavis.edu/stash/scm/tools/liquibase-oracle.git</connection>
+        <url>https://afs-dev.ucdavis.edu/stash/projects/TOOLS/repos/liquibase-oracle/browse</url>
+        <developerConnection>scm:git:ssh://git@afs-dev.ucdavis.edu:7999/tools/liquibase-oracle.git</developerConnection>
     </scm>
-
-    <repositories>
-        <repository>
-	        <id>ucd-afs-dev</id>
-	        <url>https://kfs-dev.ucdavis.edu/share/maven-repo/</url>
-	        <releases>
-	            <enabled>true</enabled>
-	        </releases>
-	        <snapshots>
-	            <enabled>true</enabled>
-	        </snapshots>        
-        </repository>
-    </repositories>
 
     <build>
         <testResources>
@@ -206,23 +193,23 @@
             </plugins>
         </pluginManagement>
 
-	    <extensions>
-	        <!-- Enabling the use of SSH -->
-	        <extension>
-	            <groupId>org.apache.maven.wagon</groupId>
-	            <artifactId>wagon-ssh-external</artifactId>
-	            <version>2.9</version>
-	        </extension>
-	    </extensions>
-
     </build>
 
-	<distributionManagement>
-		<repository>
-			<id>ucd-afs-maven-ssh</id>
-			<url>scpexe://kurrency/opt/kuali-tools/share/maven-repo</url>
-		</repository>
-	</distributionManagement>
+    <distributionManagement>
+
+        <repository>
+            <id>ucd-adminit-release</id>
+            <name>UCD AdminIT Release Repository</name>
+            <url>https://afs-dev.ucdavis.edu/archiva/repository/ucd-releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>ucd-adminit-snapshot</id>
+            <name>UCD AdminIT Snapshot Repository</name>
+            <url>https://afs-dev.ucdavis.edu/archiva/repository/ucd-snapshots/</url>
+        </snapshotRepository>
+
+    </distributionManagement>
 
 <!-- 
     <distributionManagement>
